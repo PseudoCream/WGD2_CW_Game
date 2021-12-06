@@ -16,6 +16,8 @@ class level_1 extends Phaser.Scene {
       
       /** functions for each individual player */
     create() {
+        this.levelToLoad = 'level_2';
+
         var self = this;
         this.socket = io();
         this.players = this.add.group();
@@ -102,6 +104,10 @@ class level_1 extends Phaser.Scene {
             self.star.setPosition(starLocation.x, starLocation.y);
           }
         });
+
+        this.socket.on('sceneChange', function () {
+          self.scene.start(self.levelToLoad);
+        })
       
         this.cursors = this.input.keyboard.createCursorKeys();
         this.keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);

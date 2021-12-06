@@ -23,6 +23,8 @@ preload() {
   
 create() {
   
+    this.levelToLoad = 'level_2';
+
     const self = this;
     this.players = this.physics.add.group();
     this.recHitboxes = this.physics.add.group();
@@ -151,6 +153,7 @@ create() {
   }
   
 update() {
+    self = this;
     this.players.getChildren().forEach((player) => {
       const input = players[player.playerId].input;
       attacking = players[player.playerId].attacking;
@@ -200,6 +203,8 @@ update() {
   
       if (input.keyD) {
         console.log(players[player.playerId].hit);
+        io.emit('sceneChange');
+        this.scene.start(this.levelToLoad);
       }
   
       players[player.playerId].x = player.x;
